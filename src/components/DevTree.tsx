@@ -8,9 +8,9 @@ type DevTreeProps = {
     data: User
 }
 
-export default function DevTree({data}: DevTreeProps) {
-  return (
-    <>
+export default function DevTree({ data }: DevTreeProps) {
+    return (
+        <>
             <header className="bg-slate-800 py-5">
                 <div className="mx-auto max-w-5xl flex flex-col md:flex-row items-center md:justify-between">
                     <div className="w-full p-5 lg:p-0 md:w-1/3">
@@ -45,6 +45,13 @@ export default function DevTree({data}: DevTreeProps) {
                             <Outlet />
                         </div>
                         <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
+                            <p className='text-4xl text-center text-white'>{data.handle}</p>
+
+                            {data.image &&
+                                <img  src={data.image} alt='Imagen Perfil' className='mx-auto max-w-[250px]' />
+                            }
+
+                            <p className='text-lg text-center font-black text-white'>{data.description}</p>
 
                         </div>
                     </div>
@@ -52,5 +59,5 @@ export default function DevTree({data}: DevTreeProps) {
             </div>
             <Toaster position="top-right" />
         </>
-  )
+    )
 }
