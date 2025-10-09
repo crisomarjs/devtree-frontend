@@ -8,8 +8,8 @@ import { toast } from "sonner"
 
 export default function ProfileView() {
 
-    const queryClinet = useQueryClient()
-    const data: User = queryClinet.getQueryData(['user'])!
+    const queryClient = useQueryClient()
+    const data: User = queryClient.getQueryData(['user'])!
 
     const { register, handleSubmit, formState: { errors } } = useForm<ProfileForm>({ defaultValues: {
         handle: data.handle,
@@ -23,7 +23,7 @@ export default function ProfileView() {
         },
         onSuccess: (data) => {
             toast.success(data)
-            queryClinet.invalidateQueries({queryKey: ['user']})
+            queryClient.invalidateQueries({queryKey: ['user']})
         }
     })
 
@@ -33,7 +33,7 @@ export default function ProfileView() {
             toast.error(error.message)
         },
         onSuccess: (data) => {
-            queryClinet.setQueryData(['user'], (prevData: User) => {
+            queryClient.setQueryData(['user'], (prevData: User) => {
                 return {
                     ...prevData,
                     image: data
@@ -49,7 +49,10 @@ export default function ProfileView() {
     }
 
     const handleUserProfileForm = (formData : ProfileForm) => {
-        updateProfileMutation.mutate(formData)
+        const user : User = queryClient.getQueryData(['user'])!
+        user.description = formData.description
+        user.handle = formData.handle
+        updateProfileMutation.mutate(user)
     }
 
     return (
