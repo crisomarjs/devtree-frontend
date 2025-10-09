@@ -5,21 +5,31 @@ import AuthLayout from "./layouts/AuthLayout"
 import LinkTreeView from "./views/LinkTreeView"
 import ProfileView from "./views/ProfileView"
 import AppLayout from "./layouts/AppLayout"
+import HandleView from "./views/HandleView"
+import NotFoundView from "./views/NotFoundView"
 
 export default function Router() {
   return (
     <BrowserRouter>
-        <Routes>
-            <Route element={<AuthLayout />}>
-                <Route path="/auth/login" element={<LoginView />} />
-                <Route path="/auth/register" element={<RegisterView />} />
-            </Route>
+      <Routes>
+        <Route element={<AuthLayout />}>
+          <Route path="/auth/login" element={<LoginView />} />
+          <Route path="/auth/register" element={<RegisterView />} />
+        </Route>
 
-            <Route path="/admin" element={<AppLayout />}>
-              <Route index={true} element={<LinkTreeView />} />
-              <Route path="profile" element={<ProfileView />} />
-            </Route>
-        </Routes>
+        <Route path="/admin" element={<AppLayout />}>
+          <Route index={true} element={<LinkTreeView />} />
+          <Route path="profile" element={<ProfileView />} />
+        </Route>
+
+        <Route path='/:handle' element={<AuthLayout />}>
+          <Route index={true} element={<HandleView />} />
+        </Route>
+
+        <Route path="/404" element={<AuthLayout />}>
+          <Route element={<NotFoundView />} index={true} />
+        </Route>
+      </Routes>
     </BrowserRouter>
   )
 }
